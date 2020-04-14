@@ -1,0 +1,111 @@
+In [64]: import pandas as pd
+    ...: from pandas import Series,DataFrame
+In [65]: traffic_tools=['taxi','boat','bike','bus','plane','walk']
+In [66]: a=pd.Series(traffic_tools)#生成series数组
+In [67]: a
+Out[67]:
+0     taxi#series自带数字索引
+1     boat
+2     bike
+3      bus
+4    plane
+5     walk
+dtype: object
+In [68]: a.values#数值是numpy数组
+Out[68]: array(['taxi', 'boat', 'bike', 'bus', 'plane', 'walk'], dtype=object
+In [69]: a.index#查看索引
+Out[69]: RangeIndex(start=0, stop=6, step=1)
+In [70]: b=pd.Series(traffic_tools,['a','b','c','d','e','f'])
+    ...: b.index
+Out[70]: Index(['a', 'b', 'c', 'd', 'e', 'f'], dtype='object')
+In [71]: b['a']#以索引为元素查看对应数组
+Out[71]: 'taxi'
+In [72]: a[a.index>3]#可直接应用条件筛选
+Out[72]:
+4    plane
+5     walk
+dtype: object
+In [73]: traffic1={}
+In [74]: for i in range(len(traffic_tools)):
+    ...:     word=traffic_tools[i]
+    ...:     letter=word[0]
+    ...:     traffic1.setdefault(letter,[]).append(traffic_tools[i])
+In [75]: traffic1
+Out[75]: {'t': ['taxi'], 'b': ['boat', 'bike', 'bus'], 'p': ['plane'], 'w': [walk']}#生成字典
+In [76]: traffic2=pd.Series(traffic1)#字典可直接转换为series数组
+In [77]: traffic2
+Out[77]:
+t               [taxi]
+b    [boat, bike, bus]
+p              [plane]
+w               [walk]
+dtype: object
+In [78]: traffic2.values
+    ...: traffic2.index
+Out[78]: Index(['t', 'b', 'p', 'w'], dtype='object')
+In [79]: traffic2.values#注意导出具体数据值是.values而不是.value
+Out[79]:array([list(['taxi']), list(['boat', 'bike', 'bus']), list(['plane']),list(['walk'])], dtype=object)
+In [80]: 'taxi' in a#该句检查的是数组的索引而不是数值
+Out[80]: False
+In [81]: 0 in a
+Out[81]: True
+In [82]: c=[1,2,3,4,5,6]
+In [83]: d=pd.Series(c)
+    ...: np.exp(d)#.exp是以e为底数的指数函数
+Out[83]:
+0      2.718282
+1      7.389056
+2     20.085537
+3     54.598150
+4    148.413159
+5    403.428793
+dtype: float64#在series中可以直接对其中的数组数值进行操作
+In [84]: a
+Out[84]:
+0     taxi
+1     boat
+2     bike
+3      bus
+4    plane
+5     walk
+dtype: object
+In [85]: a.isnull()#检查其中数组数值是否有为空值的情况
+Out[85]:
+0    False
+1    False
+2    False
+3    False
+4    False
+5    False
+dtype: bool
+In [86]: a.notnull()#检查其中数组数值是否不为空
+Out[86]:
+0    True
+1    True
+2    True
+3    True
+4    True
+5    True
+dtype: bool
+In [87]: a.name='traffic'
+In [88]: a.index.name='number'#series自带name属性，可以通过命名对数组进行查询，修改等其它操作，在pandas应用中非常有用
+In [89]: a
+Out[89]:
+number#索引名称
+0     taxi
+1     boat
+2     bike
+3      bus
+4    plane
+5     walk
+Name: traffic, dtype: object#数组名称
+In [90]: a.index=['s','b','d','e','r','t']#可以对series直接进行索引修改
+In [91]: a
+Out[91]:
+s     taxi
+b     boat
+d     bike
+e      bus
+r    plane
+t     walk
+Name: traffic, dtype: object
