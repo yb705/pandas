@@ -1,0 +1,13 @@
+In [80]: member2_dataframe
+Out[80]:
+attribute        name   adress   age gender
+zimu
+a          yanyongbin  tianjin  30.0    boy
+b               likun  tianjin   NaN   girl
+c            zhanglei  dongbei  38.0   girl
+d            yangqing   shanxi   NaN   girl
+e             huangdi  tianjin  37.0   girl
+In [81]: member2_dataframe.index#索引对象就像是一个固定大小的集合，具有不变性
+Out[81]: Index(['a', 'b', 'c', 'd', 'e'], dtype='object', name='zimu')
+In [82]: member2_dataframe.columns
+Out[82]: Index(['name', 'adress', 'age', 'gender'], dtype='object', name='attribute')
