@@ -1,0 +1,159 @@
+In [1]: import numpy as np
+In [2]: import pandas as pd
+In [3]: attribute=['name','adress','age','gender']
+In [4]: value=[['yanyongbin','likun','zhanglei','yangqing','huangdi'],['tianjin
+   ...: ','tianjin','dongbei','shanxi','tianjin'],[26,24,24,26,24],['boy','girl
+   ...: ','girl','girl','girl']]
+In [6]: member=zip(attribute,value)
+In [7]: member
+Out[7]: <zip at 0x41f8990>
+In [11]: member1=dict(member)
+In [12]: member1
+Out[12]:
+{'name': ['yanyongbin', 'likun', 'zhanglei', 'yangqing', 'huangdi'],
+ 'adress': ['tianjin', 'tianjin', 'dongbei', 'shanxi', 'tianjin'],
+ 'age': [26, 24, 24, 26, 24],
+ 'gender': ['boy', 'girl', 'girl', 'girl', 'girl']}
+In [14]: member_dataframe=pd.DataFrame(member1)#由字典生成dataframe，注意DataFrame要大写，以及是"（）"
+In [15]: member_dataframe
+Out[15]:
+         name   adress  age gender
+0  yanyongbin  tianjin   26    boy
+1       likun  tianjin   24   girl
+2    zhanglei  dongbei   24   girl
+3    yangqing   shanxi   26   girl
+4     huangdi  tianjin   24   girl
+
+In [16]: member_dataframe.head()#只显示前五行
+Out[16]:
+         name   adress  age gender
+0  yanyongbin  tianjin   26    boy
+1       likun  tianjin   24   girl
+2    zhanglei  dongbei   24   girl
+3    yangqing   shanxi   26   girl
+4     huangdi  tianjin   24   girl
+In [26]: member_dataframe['name']#列索引检索，注意是"[]"
+Out[26]:
+0    yanyongbin
+1         likun
+2      zhanglei
+3      yangqing
+4       huangdi
+Name: name, dtype: object
+In [31]: member_dataframe.loc[4]#行索引检索
+Out[31]:
+name      huangdi
+adress    tianjin
+age            24
+gender       girl
+Name: 4, dtype: object
+In [38]: member2_dataframe=pd.DataFrame(member1,columns=['name1','address1','age1','gender1'],index
+    ...: =['a','b','c','d','e'])#搜索不到指定的列索引，所以为空，换言之也就无法修改列索引
+In [39]: member2_dataframe
+Out[39]:
+  name1 address1 age1 gender1
+a   NaN      NaN  NaN     NaN
+b   NaN      NaN  NaN     NaN
+c   NaN      NaN  NaN     NaN
+d   NaN      NaN  NaN     NaN
+e   NaN      NaN  NaN     NaN
+In [41]: member2_dataframe=pd.DataFrame(member1,columns=['name','adress','age','gender'],index=['a'
+    ...: ,'b','c','d','e'])#新建一个dataframe，新建时可以更改行索引，但是无法修改列索引
+In [42]: member2_dataframe
+Out[42]:
+         name   adress  age gender
+a  yanyongbin  tianjin   26    boy
+b       likun  tianjin   24   girl
+c    zhanglei  dongbei   24   girl
+d    yangqing   shanxi   26   girl
+e     huangdi  tianjin   24   girl
+In [44]: member2_dataframe['true']=member2_dataframe['gender']=='boy'#以核对为条件，bool值作为返回结果，新增一列
+In [45]: member2_dataframe
+Out[45]:
+         name   adress  age gender   true
+a  yanyongbin  tianjin   26    boy   True
+b       likun  tianjin   24   girl  False
+c    zhanglei  dongbei   24   girl  False
+d    yangqing   shanxi   26   girl  False
+e     huangdi  tianjin   24   girl  False
+In [46]: del member2_dataframe['true']#删除新增的列
+In [47]: member2_dataframe
+Out[47]:
+         name   adress  age gender
+a  yanyongbin  tianjin   26    boy
+b       likun  tianjin   24   girl
+c    zhanglei  dongbei   24   girl
+d    yangqing   shanxi   26   girl
+e     huangdi  tianjin   24   girl
+In [51]: increase=pd.DataFrame({'name':'tianweiting','adress':'tianjin','age':22,'gender':'girl'},i
+    ...: ndex=['f'])#注意如果只有一列或一行数据的话，一定要把索引加个[]
+In [52]: member2_dataframe.append(increase)
+Out[52]:
+          name   adress  age gender
+a   yanyongbin  tianjin   26    boy
+b        likun  tianjin   24   girl
+c     zhanglei  dongbei   24   girl
+d     yangqing   shanxi   26   girl
+e      huangdi  tianjin   24   girl
+f  tianweiting  tianjin   22   girl
+In [63]: member2_dataframe['age']=val
+In [64]: member2_dataframe['age']
+Out[64]:
+a   NaN
+b   NaN
+c   NaN
+d   NaN
+e   NaN
+Name: age, dtype: float64
+In [65]: member2_dataframe
+Out[65]:
+         name   adress  age gender
+a  yanyongbin  tianjin  NaN    boy
+b       likun  tianjin  NaN   girl
+c    zhanglei  dongbei  NaN   girl
+d    yangqing   shanxi  NaN   girl
+e     huangdi  tianjin  NaN   girl
+In [66]: val=pd.Series([30,38,37],index=['a','c','e'])
+In [67]: member2_dataframe['age']=val#注意要赋值给dataframe是按照索引直接修改元素数值的一种方法，赋予的值一定是series才行
+In [68]: member2_dataframe
+Out[68]:
+         name   adress   age gender
+a  yanyongbin  tianjin  30.0    boy
+b       likun  tianjin   NaN   girl
+c    zhanglei  dongbei  38.0   girl
+d    yangqing   shanxi   NaN   girl
+e     huangdi  tianjin  37.0   girl
+In [69]: member2_dataframe.T#转置
+Out[69]:
+                 a        b         c         d        e
+name    yanyongbin    likun  zhanglei  yangqing  huangdi
+adress     tianjin  tianjin   dongbei    shanxi  tianjin
+age             30      NaN        38       NaN       37
+gender         boy     girl      girl      girl     girl
+In [71]: member2_dataframe.columns.name='attribute'#行名称的命名
+In [72]: member2_dataframe.index.name='zimu'#列名称的命名
+In [73]: member2_dataframe
+Out[73]:
+attribute        name   adress   age gender
+zimu
+a          yanyongbin  tianjin  30.0    boy
+b               likun  tianjin   NaN   girl
+c            zhanglei  dongbei  38.0   girl
+d            yangqing   shanxi   NaN   girl
+e             huangdi  tianjin  37.0   girl
+In [75]: member2_dataframe.values#dataframe的values属性就是array数组
+Out[75]:
+array([['yanyongbin', 'tianjin', 30.0, 'boy'],
+       ['likun', 'tianjin', nan, 'girl'],
+       ['zhanglei', 'dongbei', 38.0, 'girl'],
+       ['yangqing', 'shanxi', nan, 'girl'],
+       ['huangdi', 'tianjin', 37.0, 'girl']], dtype=object)
+In [78]: member3={'yanyongbin':{'way':'bike','sddress':'tianjin'},'likun':{'way':'walk','address':'
+    ...: tianjin','birth':2000}}
+In [79]: pd.DataFrame(member3)#嵌套字典生成dataframe，就是以外部字典的键值为轴，以内部字典的键值为列，不存在的数值则为空
+Out[79]:
+        yanyongbin    likun
+way           bike     walk
+sddress    tianjin      NaN
+address        NaN  tianjin
+birth          NaN     2000
