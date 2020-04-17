@@ -1,0 +1,32 @@
+In [87]: member2_dataframe
+Out[87]:
+attribute        name   adress   age gender
+zimu
+a          yanyongbin  tianjin  30.0    boy
+b               likun  tianjin   NaN   girl
+c            zhanglei  dongbei  38.0   girl
+d            yangqing   shanxi   NaN   girl
+e             huangdi  tianjin  37.0   girl
+In [96]: member2_dataframe.drop(['a','b','e'])#删除行条目，注意drop要用（），因为是方法
+Out[96]:
+attribute      name   adress   age gender
+zimu
+c          zhanglei  dongbei  38.0   girl
+d          yangqing   shanxi   NaN   girl
+In [97]: member2_dataframe.drop(['a'])
+Out[97]:
+attribute      name   adress   age gender
+zimu
+b             likun  tianjin   NaN   girl
+c          zhanglei  dongbei  38.0   girl
+d          yangqing   shanxi   NaN   girl
+e           huangdi  tianjin  37.0   girl
+In [100]: member2_dataframe.drop(['name'],axis='columns')#删除列条目，注意columns要用''括起来
+Out[100]:
+attribute   adress   age gender
+zimu
+a          tianjin  30.0    boy
+b          tianjin   NaN   girl
+c          dongbei  38.0   girl
+d           shanxi   NaN   girl
+e          tianjin  37.0   girl
