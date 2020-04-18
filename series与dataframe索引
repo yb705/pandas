@@ -1,0 +1,70 @@
+In [22]: a
+Out[22]:
+0    0
+1    1
+2    2
+3    3
+4    4
+dtype: int32
+In [23]: b
+Out[23]:
+a    0
+b    1
+c    2
+d    3
+e    4
+dtype: int32
+In [28]: b['a':'b']#可以接受字符切片作为索引
+Out[28]:
+a    0
+b    1
+dtype: int32
+In [29]: a[1:4]
+Out[29]:
+1    1
+2    2
+3    3
+dtype: int32
+In [31]: a[[1,4]]#可以接受列表作为索引，a[1,4]会报错，因为不知道是什么格式
+Out[31]:
+1    1
+4    4
+dtype: int32
+In [33]: a[[1,4]]=0
+In [34]: a
+Out[34]:
+0    0
+1    0
+2    2
+3    3
+4    0
+dtype: int32
+In [35]: b['a':'b']=3#通过对索引设值可以直接进行修改
+In [36]: b
+Out[36]:
+a    3
+b    3
+c    2
+d    3
+e    4
+dtype: int32
+In [37]: c=pd.DataFrame(np.arange(9).reshape(3,3),columns=['a','b','c'])
+In [38]: c
+Out[38]:
+   a  b  c
+0  0  1  2
+1  3  4  5
+2  6  7  8
+In [39]: c<4#设置bool型dataframe
+Out[39]:
+       a      b      c
+0   True   True   True
+1   True  False  False
+2  False  False  False
+In [40]: c[c<4]=3#通过将bool型当做条件来进行筛选赋值
+In [41]: c
+Out[41]:
+   a  b  c
+0  3  3  3
+1  3  4  5
+2  6  7  8
